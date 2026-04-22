@@ -1,0 +1,131 @@
+.back-btn {
+  margin-bottom: 16px;
+}
+
+.service-info {
+  margin-top: 8px;
+}
+
+.service-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.meta-separator {
+  color: var(--text-muted);
+}
+
+.meta-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  color: var(--text-secondary);
+  background: var(--bg-glass);
+}
+
+.filter-tab.active {
+  color: var(--text-primary);
+  background: var(--bg-glass);
+  border-color: var(--border-glass);
+}
+
+.filter-tab.active.tab-info { color: var(--severity-info); border-color: rgba(96,165,250,0.3); }
+.filter-tab.active.tab-warn { color: var(--severity-warn); border-color: rgba(251,191,36,0.3); }
+.filter-tab.active.tab-error { color: var(--severity-error); border-color: rgba(248,113,113,0.3); }
+.filter-tab.active.tab-critical { color: var(--severity-critical); border-color: rgba(192,132,252,0.3); }
+
+.tab-count {
+  padding: 1px 7px;
+  font-size: 0.7rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+}
+
+/* Event List */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+}
+
+.event-row:hover {
+  transform: none;
+}
+
+.event-row-skeleton {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+}
+
+.event-message {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.event-time {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+}

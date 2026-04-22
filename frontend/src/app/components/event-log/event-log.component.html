@@ -1,0 +1,68 @@
+<div class="container">
+  <header class="page-header">
+    <button class="btn btn-secondary back-btn" (click)="goBack()" id="btn-back">
+      ← Back to Dashboard
+    </button>
+
+    @if (service(); as svc) {
+      <div class="service-info">
+        <h1 class="page-title" id="event-log-title">{{ svc.name }}</h1>
+        <div class="service-meta">
+          <span class="badge"
+            [class.badge-healthy]="svc.status === 'HEALTHY'"
+            [class.badge-degraded]="svc.status === 'DEGRADED'"
+            [class.badge-down]="svc.status === 'DOWN'">
+            {{ svc.status }}
+          </span>
+          <span class="meta-separator">•</span>
+          <span class="meta-text">{{ svc.environment }}</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-text">{{ svc.owner }}</span>
+        </div>
+      </div>
+    }
+  </header>
+
+  <!-- Severity Filter Tabs -->
+  <div class="filter-tabs" id="severity-filters">
+    @for (sev of ['ALL','INFO','WARN','ERROR','CRITICAL']; track sev) {
+      <button
+        class="filter-tab"
+        [class.active]="severityFilter() === sev"
+        [class]="'filter-tab tab-' + sev.toLowerCase()"
+        [class.active]="severityFilter() === sev"
+        (click)="setSeverityFilter(sev)"
+        [attr.id]="'filter-' + sev">
+        {{ sev }}
+        <span class="tab-count">{{ severityCounts()[sev] }}</span>
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="event-list stagger-children">
+      @for (i of [1,2,3,4,5]; track i) {
+        <div class="glass-card event-row-skeleton">
+          <div class="skeleton" style="height:20px;width:80px"></div>
+          <div class="skeleton" style="height:16px;width:60%;margin-left:16px"></div>
+          <div class="skeleton" style="height:14px;width:120px;margin-left:auto"></div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="event-list stagger-children" id="event-list">
+      @for (event of filteredEvents(); track event.id) {
+        <div class="glass-card event-row" [attr.id]="'event-' + event.id">
+          <span [class]="badgeClass(event.severity)">{{ event.severity }}</span>
+          <p class="event-message">{{ event.message }}</p>
+          <time class="event-time">{{ formatTimestamp(event.timestamp) }}</time>
+        </div>
+      } @empty {
+        <div class="empty-state glass-card">
+          <span class="empty-icon">📭</span>
+          <p>No events found for this filter</p>
+        </div>
+      }
+    </div>
+  }
+</div>

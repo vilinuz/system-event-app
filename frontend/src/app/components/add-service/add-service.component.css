@@ -1,0 +1,67 @@
+.form-card {
+  max-width: 540px;
+  margin-top: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-card:hover {
+  transform: none;
+}
+
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--severity-error);
+  font-size: 0.875rem;
+}
+
+.submit-btn {
+  align-self: flex-start;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.success-card {
+  max-width: 540px;
+  margin-top: 24px;
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.success-card:hover {
+  transform: none;
+}
+
+.success-icon {
+  font-size: 3rem;
+}
+
+.success-card h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.success-card p {
+  color: var(--text-secondary);
+}

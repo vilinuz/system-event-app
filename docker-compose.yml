@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: monitor-postgres
+    environment:
+      POSTGRES_USER: monitor
+      POSTGRES_PASSWORD: monitor_password
+      POSTGRES_DB: monitordb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monitor -d monitordb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: monitor-backend
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/monitordb
+      - SPRING_PROFILES_ACTIVE=prod
+      - ALERT_WEBHOOK_URL=http://localhost:9999/dummy-webhook # Mock webhook
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: monitor-frontend
+    ports:
+      - "8082:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

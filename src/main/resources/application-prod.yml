@@ -1,0 +1,25 @@
+spring:
+  security:
+    jwt:
+      # In a real app, this should be injected via environment variable
+      secret: ${JWT_SECRET:cHJvZHVjdGlvbi1zZWNyZXQta2V5LXRoYXQtaXMtbG9uZy1lbm91Z2gtZm9yLWhzaGEyNTY=}
+      expirationMs: 86400000
+
+  # PostgreSQL Configuration for Production
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monitordb
+    username: monitor
+    password: monitor_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # In prod, we validate or update instead of create-drop
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  # Disable H2 console in production
+  h2:
+    console:
+      enabled: false

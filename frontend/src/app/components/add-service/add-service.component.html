@@ -1,0 +1,61 @@
+<div class="container">
+  <header class="page-header">
+    <button class="btn btn-secondary" (click)="goBack()" id="btn-back">
+      ← Back to Dashboard
+    </button>
+    <h1 class="page-title" id="add-service-title">Add New Service</h1>
+    <p class="page-subtitle">Register a new service to the health monitor</p>
+  </header>
+
+  @if (success()) {
+    <div class="success-card glass-card animate-fade-in-up">
+      <span class="success-icon">✅</span>
+      <h2>Service Created!</h2>
+      <p>Redirecting to dashboard...</p>
+    </div>
+  } @else {
+    <form class="form-card glass-card animate-fade-in-up" (ngSubmit)="onSubmit()" id="add-service-form">
+      @if (error()) {
+        <div class="form-error">
+          <span>⚠️</span> {{ error() }}
+        </div>
+      }
+
+      <div class="form-group">
+        <label class="form-label" for="service-name">Service Name *</label>
+        <input class="form-input" type="text" id="service-name"
+          placeholder="e.g. Payment-Service"
+          [ngModel]="name()" (ngModelChange)="name.set($event)"
+          name="name" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="service-env">Environment *</label>
+        <select class="form-select" id="service-env"
+          [ngModel]="environment()" (ngModelChange)="environment.set($event)"
+          name="environment">
+          <option value="DEV">DEV</option>
+          <option value="STAGING">STAGING</option>
+          <option value="PROD">PROD</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="service-owner">Owner *</label>
+        <input class="form-input" type="text" id="service-owner"
+          placeholder="e.g. Team Alpha"
+          [ngModel]="owner()" (ngModelChange)="owner.set($event)"
+          name="owner" required />
+      </div>
+
+      <button class="btn btn-primary submit-btn" type="submit"
+        [disabled]="submitting()" id="btn-submit">
+        @if (submitting()) {
+          Creating...
+        } @else {
+          🚀 Create Service
+        }
+      </button>
+    </form>
+  }
+</div>

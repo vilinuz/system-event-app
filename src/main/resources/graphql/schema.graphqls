@@ -1,0 +1,20 @@
+type Query {
+    events(serviceId: ID, severity: String): [Event!]!
+    eventsByService(serviceName: String!): [Event!]!
+}
+
+type Event {
+    id: ID!
+    severity: String!
+    message: String!
+    timestamp: String!
+    service: Service!
+}
+
+type Service {
+    id: ID!
+    name: String!
+    environment: String!
+    owner: String!
+    status: String!
+}

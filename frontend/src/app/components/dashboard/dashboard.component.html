@@ -1,0 +1,98 @@
+<div class="container">
+  <header class="page-header">
+    <div class="header-row">
+      <div>
+        <h1 class="page-title" id="dashboard-title">Service Health Dashboard</h1>
+        <p class="page-subtitle">Monitor and manage your services in real-time</p>
+      </div>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input class="form-input search-input" type="text"
+            placeholder="Search services..." id="search-services"
+            [value]="searchQuery()" (input)="onSearch($event)" />
+        </div>
+        <button class="btn btn-primary" (click)="navigateToAdd()" id="btn-add-service">
+          <span>➕</span> Add Service
+        </button>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-value">{{ totalServices() }}</span>
+        <span class="stat-label">Total Services</span>
+      </div>
+      <div class="stat-item stat-healthy">
+        <span class="stat-value">{{ healthyCount() }}</span>
+        <span class="stat-label">Healthy</span>
+      </div>
+      <div class="stat-item stat-degraded">
+        <span class="stat-value">{{ degradedCount() }}</span>
+        <span class="stat-label">Degraded</span>
+      </div>
+      <div class="stat-item stat-down">
+        <span class="stat-value">{{ downCount() }}</span>
+        <span class="stat-label">Down</span>
+      </div>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="cards-grid stagger-children">
+      @for (i of [1,2,3,4]; track i) {
+        <div class="glass-card skeleton-card">
+          <div class="skeleton" style="height:24px;width:60%"></div>
+          <div class="skeleton" style="height:16px;width:40%;margin-top:12px"></div>
+          <div class="skeleton" style="height:32px;width:30%;margin-top:16px"></div>
+        </div>
+      }
+    </div>
+  } @else if (error()) {
+    <div class="error-state glass-card">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error() }}</p>
+      <button class="btn btn-secondary" (click)="loadServices()">Retry</button>
+    </div>
+  } @else {
+    <div class="cards-grid stagger-children" id="services-grid">
+      @for (service of filteredServices(); track service.id) {
+        <div class="glass-card service-card" (click)="navigateToEvents(service.id)"
+          [attr.id]="'service-' + service.id">
+          <div class="card-header">
+            <h3 class="service-name">{{ service.name }}</h3>
+            <span class="badge"
+              [class.badge-healthy]="service.status === 'HEALTHY'"
+              [class.badge-degraded]="service.status === 'DEGRADED'"
+              [class.badge-down]="service.status === 'DOWN'">
+              {{ service.status }}
+            </span>
+          </div>
+          <div class="card-details">
+            <div class="detail-row">
+              <span class="detail-label">Environment</span>
+              <span class="detail-value env-badge" [attr.data-env]="service.environment">
+                {{ service.environment }}
+              </span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Owner</span>
+              <span class="detail-value">{{ service.owner }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Last Updated</span>
+              <span class="detail-value">{{ formatTime(service.updatedAt) }}</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="view-events-link">View Events →</span>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state glass-card">
+          <span class="empty-icon">📡</span>
+          <p>No services match your search</p>
+        </div>
+      }
+    </div>
+  }
+</div>
