@@ -6,6 +6,9 @@ It features a robust **Java 25 / Spring Boot 4** backend and a reactive **Angula
 
 ## 🚀 Getting Started
 
+### AI usage
+I used antigravity to write most of the HTML, CSS, and some of the Angular boilerplate code. I also used it to debug the code and fix issues. I did not use any AI to write the business logic, the tests, or the database-related code. I did review and  improve all the AI generated code.
+
 ### Prerequisites
 Make sure you have the following installed on your machine:
 - **Java 25** (GraalVM recommended)
